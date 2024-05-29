@@ -27,19 +27,19 @@ public class Livro implements Serializable {
     @Column(name = "liv_id")
     private Long id;
     
-    @Column(name = "liv_titulo")
+    @Column(name = "liv_titulo", nullable = false)
     private String titulo;
     
-    @Column(name = "liv_nome_autor")
+    @Column(name = "liv_nome_autor", nullable = false)
     private String nomeAutor;
     
-    @Column(name = "liv_nome_editora")
+    @Column(name = "liv_nome_editora", nullable = false)
     private String nomeEditora;
     
-    @Column(name = "liv_num_paginas")
+    @Column(name = "liv_num_paginas", nullable = false)
     private int numeroPaginas;
     
-    @Column(name = "liv_edicao")
+    @Column(name = "liv_edicao", nullable = false)
     private String edicao;
 
     public Livro() {
