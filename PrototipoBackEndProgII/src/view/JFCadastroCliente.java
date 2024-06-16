@@ -4,8 +4,14 @@
  */
 package view;
 
-import controller.ControllerLivro;
+import controller.ControllerConsultaLivro;
+import controller.ControllerManutencaoMembro;
 import dao.DaoLivro;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.Livro;
 
 /**
@@ -13,14 +19,97 @@ import model.Livro;
  * @author leonardo gaertner
  */
 public class JFCadastroCliente extends javax.swing.JFrame {
+    
+    ControllerManutencaoMembro controller;
 
     /**
      * Creates new form JFCadastroLivro
      */
     public JFCadastroCliente() {
+        this.controller = new ControllerManutencaoMembro(this);
         initComponents();
     }
 
+    public JButton getjBGravar() {
+        return jBGravar;
+    }
+
+    public void setjBGravar(JButton jBGravar) {
+        this.jBGravar = jBGravar;
+    }
+
+    public JButton getjBLimpar() {
+        return jBLimpar;
+    }
+
+    public void setjBLimpar(JButton jBLimpar) {
+        this.jBLimpar = jBLimpar;
+    }
+
+    public JTextField getjTCadastro() {
+        return jTCadastro;
+    }
+
+    public void setjTCadastro(JTextField jTCadastro) {
+        this.jTCadastro = jTCadastro;
+    }
+
+    public JTextField getjTCpf() {
+        return jTCpf;
+    }
+
+    public void setjTCpf(JTextField jTCpf) {
+        this.jTCpf = jTCpf;
+    }
+
+    public JTextField getjTId() {
+        return jTId;
+    }
+
+    public void setjTId(JTextField jTId) {
+        this.jTId = jTId;
+    }
+
+    public JTextField getjTNascimento() {
+        return jTNascimento;
+    }
+
+    public void setjTNascimento(JTextField jTNascimento) {
+        this.jTNascimento = jTNascimento;
+    }
+
+    public JTextField getjTNome() {
+        return jTNome;
+    }
+
+    public void setjTNome(JTextField jTNome) {
+        this.jTNome = jTNome;
+    }
+
+    public JComboBox<String> getjCBPlano() {
+        return jCBPlano;
+    }
+
+    public void setjCBPlano(JComboBox<String> jCBPlano) {
+        this.jCBPlano = jCBPlano;
+    }
+
+    public JComboBox<String> getjCBStatus() {
+        return jCBStatus;
+    }
+
+    public void setjCBStatus(JComboBox<String> jCBStatus) {
+        this.jCBStatus = jCBStatus;
+    }
+    
+    public ControllerManutencaoMembro getController() {
+        return controller;
+    }
+
+    public void setController(ControllerManutencaoMembro controller) {
+        this.controller = controller;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,8 +134,8 @@ public class JFCadastroCliente extends javax.swing.JFrame {
         jBGravar = new javax.swing.JButton();
         jBLimpar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jTStatus = new javax.swing.JTextField();
-        jTPlano = new javax.swing.JTextField();
+        jCBPlano = new javax.swing.JComboBox<>();
+        jCBStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -55,6 +144,8 @@ public class JFCadastroCliente extends javax.swing.JFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
+
+        jTId.setEnabled(false);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("CPF");
@@ -101,21 +192,24 @@ public class JFCadastroCliente extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("Status");
 
+        jCBPlano.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Básico", "Premium" }));
+
+        jCBStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ativo", "Inativo" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBLimpar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBGravar)
-                .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBLimpar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBGravar))
+                    .addComponent(jTTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -129,19 +223,15 @@ public class JFCadastroCliente extends javax.swing.JFrame {
                             .addComponent(jTCpf, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTId, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTCadastro)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jTPlano))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCBPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 161, Short.MAX_VALUE)))
                 .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
@@ -169,15 +259,14 @@ public class JFCadastroCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jTPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCBPlano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCBStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBGravar)
                     .addComponent(jBLimpar))
@@ -196,28 +285,46 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jTNomeActionPerformed
 
     private void jBGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGravarActionPerformed
-        String titulo = jTTitulo.getText();
-        String nomeEditora = jTNascimento.getText();
-        String nomeAutor = jTNome.getText();
-        int numPaginas = Integer.parseInt(jTCadastro.getText());
-        String edicao = jTCpf.getText();
-
-        Livro livro = new Livro(titulo, nomeEditora, nomeAutor, numPaginas, edicao);
-        ControllerLivro controllerLivro = new ControllerLivro(livro);
-
-        controllerLivro.gravarLivro();    
+        String validaCampos = this.validaCampos();
+        if(!validaCampos.isBlank()){
+            JOptionPane.showMessageDialog(rootPane, validaCampos);
+        } else {
+            this.getController().gravarMembro();
+        } 
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-       jTId.setText(null);
-       jTCpf.setText(null);
-       jTNome.setText(null);
-       jTNascimento.setText(null);
-       jTCadastro.setText(null);
-       jTPlano.setText(null);
-       jTStatus.setText(null);
+       jTCpf.setText("");
+       jTNome.setText("");
+       jTNascimento.setText("");
+       jTCadastro.setText("");
+       jCBPlano.setSelectedIndex(0);
+       jCBStatus.setSelectedIndex(0);
     }//GEN-LAST:event_jBLimparActionPerformed
 
+    private String validaCampos(){
+        String msg = "";
+        if(jTCpf.getText().isBlank()){
+            msg += "\n- O campo CPF não pode ser vazio!";
+        }
+        if(jTNome.getText().isBlank()){
+            msg += "\n- O campo Nome não pode ser vazio!";
+        }
+        if(jTNascimento.getText().isBlank()){
+            msg += "\n- O campo Cargo não pode ser vazio!";
+        }
+        if(jTCadastro.getText().isBlank()){
+            msg += "\n- O campo Admissão não pode ser vazio!";
+        }
+        if(this.getController().getPlano() == 0){
+            msg += "\n- O campo Plano é inválido!";
+        }
+        if(this.getController().getStatus() == 0){
+            msg += "\n- O campo Status é inválido!";
+        }
+        return msg;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -257,6 +364,8 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBGravar;
     private javax.swing.JButton jBLimpar;
+    private javax.swing.JComboBox<String> jCBPlano;
+    private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -269,8 +378,6 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTId;
     private javax.swing.JTextField jTNascimento;
     private javax.swing.JTextField jTNome;
-    private javax.swing.JTextField jTPlano;
-    private javax.swing.JTextField jTStatus;
     private javax.swing.JLabel jTTitulo;
     // End of variables declaration//GEN-END:variables
 }

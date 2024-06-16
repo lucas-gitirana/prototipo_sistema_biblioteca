@@ -4,8 +4,12 @@
  */
 package view;
 
-import controller.ControllerLivro;
+import controller.ControllerConsultaLivro;
+import controller.ControllerManutencaoFuncionario;
 import dao.DaoLivro;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.Livro;
 
 /**
@@ -13,14 +17,97 @@ import model.Livro;
  * @author leonardo gaertner
  */
 public class JFCadastroFuncionario extends javax.swing.JFrame {
+    
+    private ControllerManutencaoFuncionario controller;
 
     /**
      * Creates new form JFCadastroLivro
      */
     public JFCadastroFuncionario() {
+        this.controller = new ControllerManutencaoFuncionario(this);
         initComponents();
     }
 
+    public ControllerManutencaoFuncionario getController() {
+        return controller;
+    }
+
+    public void setController(ControllerManutencaoFuncionario controller) {
+        this.controller = controller;
+    }
+
+    public JButton getjBGravar() {
+        return jBGravar;
+    }
+
+    public void setjBGravar(JButton jBGravar) {
+        this.jBGravar = jBGravar;
+    }
+
+    public JButton getjBLimpar() {
+        return jBLimpar;
+    }
+
+    public void setjBLimpar(JButton jBLimpar) {
+        this.jBLimpar = jBLimpar;
+    }
+
+    public JTextField getjTAdmissao() {
+        return jTAdmissao;
+    }
+
+    public void setjTAdmissao(JTextField jTAdmissao) {
+        this.jTAdmissao = jTAdmissao;
+    }
+
+    public JTextField getjTCargo() {
+        return jTCargo;
+    }
+
+    public void setjTCargo(JTextField jTCargo) {
+        this.jTCargo = jTCargo;
+    }
+
+    public JTextField getjTCpf() {
+        return jTCpf;
+    }
+
+    public void setjTCpf(JTextField jTCpf) {
+        this.jTCpf = jTCpf;
+    }
+
+    public JTextField getjTId() {
+        return jTId;
+    }
+
+    public void setjTId(JTextField jTId) {
+        this.jTId = jTId;
+    }
+
+    public JTextField getjTNome() {
+        return jTNome;
+    }
+
+    public void setjTNome(JTextField jTNome) {
+        this.jTNome = jTNome;
+    }
+
+    public JTextField getjTSalario() {
+        return jTSalario;
+    }
+
+    public void setjTSalario(JTextField jTSalario) {
+        this.jTSalario = jTSalario;
+    }
+
+    public JTextField getjTNascimento() {
+        return jTNascimento;
+    }
+
+    public void setjTNascimento(JTextField jTNascimento) {
+        this.jTNascimento = jTNascimento;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,6 +132,8 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
         jTSalario = new javax.swing.JTextField();
         jBGravar = new javax.swing.JButton();
         jBLimpar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jTNascimento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -53,6 +142,8 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
+
+        jTId.setEnabled(false);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("CPF");
@@ -96,6 +187,9 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
             }
         });
 
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel8.setText("Nascimento");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,26 +202,32 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTSalario, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jTCpf, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                             .addComponent(jTNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                             .addComponent(jTCargo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                            .addComponent(jTAdmissao, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                            .addComponent(jTId, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))))
+                            .addComponent(jTId, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTSalario, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTAdmissao, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTNascimento)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -153,13 +253,17 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTAdmissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBGravar)
                     .addComponent(jBLimpar))
@@ -178,27 +282,46 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
     }//GEN-LAST:event_jTNomeActionPerformed
 
     private void jBGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGravarActionPerformed
-        String titulo = jTSalario.getText();
-        String nomeEditora = jTCargo.getText();
-        String nomeAutor = jTNome.getText();
-        int numPaginas = Integer.parseInt(jTAdmissao.getText());
-        String edicao = jTCpf.getText();
-
-        Livro livro = new Livro(titulo, nomeEditora, nomeAutor, numPaginas, edicao);
-        ControllerLivro controllerLivro = new ControllerLivro(livro);
-
-        controllerLivro.gravarLivro();    
+        String validaCampos = this.validaCampos();
+        if(!validaCampos.isBlank()){
+            JOptionPane.showMessageDialog(rootPane, validaCampos);
+        } else {
+            this.getController().gravarFuncionario();
+        }
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-       jTId.setText(null);
-       jTCpf.setText(null);
-       jTNome.setText(null);
-       jTCargo.setText(null);
-       jTAdmissao.setText(null);
-       jTSalario.setText(null);
+       jTAdmissao.setText("");
+       jTCargo.setText("");
+       jTCpf.setText("");
+       jTNascimento.setText("");
+       jTNome.setText("");
+       jTSalario.setText("");
     }//GEN-LAST:event_jBLimparActionPerformed
 
+    private String validaCampos(){
+        String msg = "";
+        if(jTCpf.getText().isBlank()){
+            msg += "\n- O campo CPF não pode ser vazio!";
+        }
+        if(jTNome.getText().isBlank()){
+            msg += "\n- O campo Nome não pode ser vazio!";
+        }
+        if(jTCargo.getText().isBlank()){
+            msg += "\n- O campo Cargo não pode ser vazio!";
+        }
+        if(jTAdmissao.getText().isBlank()){
+            msg += "\n- O campo Admissão não pode ser vazio!";
+        }
+        if(jTNascimento.getText().isBlank()){
+            msg += "\n- O campo Nascimento não pode ser vazio!";
+        }
+        if(jTSalario.getText().isBlank()){
+            msg += "\n- O campo Salário não pode ser vazio!";
+        }
+        return msg;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -247,10 +370,12 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTAdmissao;
     private javax.swing.JTextField jTCargo;
     private javax.swing.JTextField jTCpf;
     private javax.swing.JTextField jTId;
+    private javax.swing.JTextField jTNascimento;
     private javax.swing.JTextField jTNome;
     private javax.swing.JTextField jTSalario;
     // End of variables declaration//GEN-END:variables

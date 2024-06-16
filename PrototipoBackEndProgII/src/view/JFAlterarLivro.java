@@ -4,7 +4,7 @@
  */
 package view;
 
-import controller.ControllerLivro;
+import controller.ControllerConsultaLivro;
 import dao.DaoLivro;
 import model.Livro;
 
@@ -185,9 +185,9 @@ public class JFAlterarLivro extends javax.swing.JFrame {
         String edicao = jTEdicao.getText();
 
         Livro livro = new Livro(titulo, nomeEditora, nomeAutor, numPaginas, edicao);
-        ControllerLivro controllerLivro = new ControllerLivro(livro);
+        //ControllerConsultaLivro controllerLivro = new ControllerConsultaLivro(livro);
 
-        controllerLivro.gravarLivro();    
+        //controllerLivro.gravarLivro();    
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed

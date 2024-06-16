@@ -68,10 +68,9 @@ public class Emprestimo implements Serializable {
     public Emprestimo() {
     }
 
-    public Emprestimo(Calendar dataEmprestimo, Calendar dataDataDevolucaoEsperada, Calendar dataDevolucaoReal, double valorEmprestimo, Pessoa membro, Pessoa funcionario) {
+    public Emprestimo(Calendar dataEmprestimo, Calendar dataDataDevolucaoEsperada, double valorEmprestimo, Pessoa membro, Pessoa funcionario) {
         this.dataEmprestimo = dataEmprestimo;
         this.dataDataDevolucaoEsperada = dataDataDevolucaoEsperada;
-        this.dataDevolucaoReal = dataDevolucaoReal;
         this.valorEmprestimo = valorEmprestimo;
         this.membro = membro;
         this.funcionario = funcionario;

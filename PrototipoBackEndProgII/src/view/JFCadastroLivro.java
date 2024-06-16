@@ -4,23 +4,103 @@
  */
 package view;
 
-import controller.ControllerLivro;
+import controller.ControllerConsultaLivro;
+import controller.ControllerManutencaoLivro;
 import dao.DaoLivro;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import model.Livro;
+import org.eclipse.persistence.jpa.jpql.parser.ConcatExpression;
 
 /**
  *
  * @author gitir
  */
 public class JFCadastroLivro extends javax.swing.JFrame {
-
+    
+    private ControllerManutencaoLivro controller;
+    
     /**
      * Creates new form JFCadastroLivro
      */
     public JFCadastroLivro() {
+        this.controller = new ControllerManutencaoLivro(this);
         initComponents();
     }
 
+    public ControllerManutencaoLivro getController() {
+        return controller;
+    }
+
+    public void setController(ControllerManutencaoLivro controller) {
+        this.controller = controller;
+    }
+    
+    public JTextField getjTAutor() {
+        return jTAutor;
+    }
+
+    public void setjTAutor(JTextField jTAutor) {
+        this.jTAutor = jTAutor;
+    }
+
+    public JTextField getjTEdicao() {
+        return jTEdicao;
+    }
+
+    public void setjTEdicao(JTextField jTEdicao) {
+        this.jTEdicao = jTEdicao;
+    }
+
+    public JTextField getjTEditora() {
+        return jTEditora;
+    }
+
+    public void setjTEditora(JTextField jTEditora) {
+        this.jTEditora = jTEditora;
+    }
+
+    public JTextField getjTId() {
+        return jTId;
+    }
+
+    public void setjTId(JTextField jTId) {
+        this.jTId = jTId;
+    }
+
+    public JTextField getjTNumPaginas() {
+        return jTNumPaginas;
+    }
+
+    public void setjTNumPaginas(JTextField jTNumPaginas) {
+        this.jTNumPaginas = jTNumPaginas;
+    }
+
+    public JTextField getjTTitulo() {
+        return jTTitulo;
+    }
+
+    public void setjTTitulo(JTextField jTTitulo) {
+        this.jTTitulo = jTTitulo;
+    }
+
+    public JButton getjBGravar() {
+        return jBGravar;
+    }
+
+    public void setjBGravar(JButton jBGravar) {
+        this.jBGravar = jBGravar;
+    }
+
+    public JButton getjBLimpar() {
+        return jBLimpar;
+    }
+
+    public void setjBLimpar(JButton jBLimpar) {
+        this.jBLimpar = jBLimpar;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,6 +133,8 @@ public class JFCadastroLivro extends javax.swing.JFrame {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
+
+        jTId.setEnabled(false);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Edição");
@@ -178,27 +260,46 @@ public class JFCadastroLivro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTAutorActionPerformed
 
     private void jBGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGravarActionPerformed
-        String titulo = jTTitulo.getText();
-        String nomeEditora = jTEditora.getText();
-        String nomeAutor = jTAutor.getText();
-        int numPaginas = Integer.parseInt(jTNumPaginas.getText());
-        String edicao = jTEdicao.getText();
-
-        Livro livro = new Livro(titulo, nomeEditora, nomeAutor, numPaginas, edicao);
-        ControllerLivro controllerLivro = new ControllerLivro(livro);
-
-        controllerLivro.gravarLivro();    
+        String validaCampos = this.validaCampos();
+        if(!validaCampos.isBlank()){
+            JOptionPane.showMessageDialog(rootPane, validaCampos);
+        } else {
+            this.getController().gravarLivro();
+        }                
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-       jTId.setText(null);
-       jTEdicao.setText(null);
-       jTAutor.setText(null);
-       jTEditora.setText(null);
-       jTNumPaginas.setText(null);
-       jTTitulo.setText(null);
+       jTId.setText("");
+       jTEdicao.setText("");
+       jTAutor.setText("");
+       jTEditora.setText("");
+       jTNumPaginas.setText("");
+       jTTitulo.setText("");
     }//GEN-LAST:event_jBLimparActionPerformed
 
+    private String validaCampos(){
+        String msg = "";
+        if(jTId.getText().isBlank()){
+            //msg += "\n O campo Edição não pode ser vazio!";
+        }
+        if(jTEdicao.getText().isBlank()){
+            msg += "\n- O campo Edição não pode ser vazio!";
+        }
+        if(jTAutor.getText().isBlank()){
+            msg += "\n- O campo Autor não pode ser vazio!";
+        }        
+        if(jTEditora.getText().isBlank()){
+            msg += "\n- O campo Editora não pode ser vazio!";
+        }
+        if(jTNumPaginas.getText().isBlank()){
+            msg += "\n- O campo Num. Páginas não pode ser vazio!";
+        }
+        if(jTTitulo.getText().isBlank()){
+            msg += "\n- O campo Título não pode ser vazio!";
+        }        
+        return msg;
+    }
+    
     /**
      * @param args the command line arguments
      */

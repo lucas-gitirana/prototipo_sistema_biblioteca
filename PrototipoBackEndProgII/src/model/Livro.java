@@ -52,6 +52,10 @@ public class Livro implements Serializable {
         this.numeroPaginas = numeroPaginas;
         this.edicao = edicao;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public Long getId() {
         return id;
