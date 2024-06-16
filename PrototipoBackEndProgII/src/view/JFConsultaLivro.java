@@ -16,10 +16,10 @@ import javax.swing.JTextField;
  */
 public class JFConsultaLivro extends javax.swing.JFrame {
     
-    private ControllerConsultaLivro controller;    
+    private ControllerConsultaLivro controller;
 
     public JFConsultaLivro() {
-        this.controller = new ControllerConsultaLivro(this);       
+        this.controller = new ControllerConsultaLivro(this);
         initComponents();
     }
 

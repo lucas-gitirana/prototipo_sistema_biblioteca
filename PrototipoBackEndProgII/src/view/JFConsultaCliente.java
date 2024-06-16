@@ -4,19 +4,68 @@
  */
 package view;
 
+import controller.ControllerConsultaMembro;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author leonardo gaertner
  */
 public class JFConsultaCliente extends javax.swing.JFrame {
+    
+    private ControllerConsultaMembro controller;
 
     /**
      * Creates new form JFConsultaLivro
      */
     public JFConsultaCliente() {
+        this.controller = new ControllerConsultaMembro(this);
         initComponents();
     }
 
+    public ControllerConsultaMembro getController() {
+        return controller;
+    }
+
+    public void setController(ControllerConsultaMembro controller) {
+        this.controller = controller;
+    }
+
+    public JButton getjBPesquisar() {
+        return jBPesquisar;
+    }
+
+    public void setjBPesquisar(JButton jBPesquisar) {
+        this.jBPesquisar = jBPesquisar;
+    }
+
+    public JComboBox<String> getjCBFiltro() {
+        return jCBFiltro;
+    }
+
+    public void setjCBFiltro(JComboBox<String> jCBFiltro) {
+        this.jCBFiltro = jCBFiltro;
+    }
+
+    public JTextField getjTPesquisa() {
+        return jTPesquisa;
+    }
+
+    public void setjTPesquisa(JTextField jTPesquisa) {
+        this.jTPesquisa = jTPesquisa;
+    }
+
+    public JTable getjTableMembros() {
+        return jTableMembros;
+    }
+
+    public void setjTableMembros(JTable jTableMembros) {
+        this.jTableMembros = jTableMembros;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,14 +82,14 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableMembros = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jTPesquisa = new javax.swing.JTextField();
+        jBPesquisar = new javax.swing.JButton();
+        jCBFiltro = new javax.swing.JComboBox<>();
 
         jScrollPane2.setViewportView(jEditorPane1);
 
@@ -56,8 +105,13 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         jCheckBoxMenuItem3.setText("jCheckBoxMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMembros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -65,7 +119,7 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                 "Id", "CPF", "Nome", "Data de Nascimento", "Data de Cadastro", "Plano", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableMembros);
 
         jButton1.setText("Incluir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,20 +140,24 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Cliente");
 
-        jTextField1.setText("Buscar Cliente");
-        jTextField1.setMargin(new java.awt.Insets(0, 6, 0, 6));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTPesquisa.setMargin(new java.awt.Insets(0, 6, 0, 6));
+        jTPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTPesquisaActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Buscar");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "CPF", "Nome", "Data de Nascimento", "Data de Cadastro", "Plano", "Status" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jBPesquisar.setText("Buscar");
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jBPesquisarActionPerformed(evt);
+            }
+        });
+
+        jCBFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "CPF", "Nome", "Data de Nascimento", "Data de Cadastro", "Plano", "Status" }));
+        jCBFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBFiltroActionPerformed(evt);
             }
         });
 
@@ -122,12 +180,12 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 1, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
+                            .addComponent(jCBFiltro, javax.swing.GroupLayout.Alignment.LEADING, 0, 1, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 646, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(jBPesquisar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -136,10 +194,11 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
                 .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTPesquisa)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBPesquisar)
+                        .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -158,18 +217,26 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         alterarCliente.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPesquisaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTPesquisaActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jCBFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFiltroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jCBFiltroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFCadastroCliente cadastroCliente = new JFCadastroCliente();
         cadastroCliente.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.getController().pesquisar();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -214,20 +281,20 @@ public class JFConsultaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jCBFiltro;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTPesquisa;
+    private javax.swing.JTable jTableMembros;
     // End of variables declaration//GEN-END:variables
 }

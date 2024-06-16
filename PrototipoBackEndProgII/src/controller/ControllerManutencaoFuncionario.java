@@ -73,7 +73,7 @@ public class ControllerManutencaoFuncionario{
             date = dateFormat.parse(nascimento);
             dataNascimento.setTime(date);
             
-            Funcionario funcionario = new Funcionario(cpf, nome, dataAdmissao, cargo, dataAdmissao, salario);
+            Funcionario funcionario = new Funcionario(cpf, nome, dataNascimento, cargo, dataAdmissao, salario);
             this.getDaoFuncionario().insert(funcionario);
             
             JOptionPane.showMessageDialog(this.getView(), "Funcionário gravado com sucesso!");

@@ -4,6 +4,7 @@
  */
 package dao;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
 import model.Unidade;
@@ -69,6 +70,50 @@ public class DaoUnidade extends Dao<Unidade>{
         } catch (Exception e) {
             this.getEntityManager().close();
             throw new RuntimeException("Não foi possível carregar os unidades. Erro: " + e.getMessage());
+        }
+    }
+    
+    public List<Unidade> listById(Long id){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT u from Unidade u where u.id = :id");
+            query.setParameter("id", id);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar a unidade de id " + id + ". \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Unidade> listByIdLivro(Long id){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT u from Unidade u where u.livro.id = :id");
+            query.setParameter("id", id);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar a unidade de id " + id + ". \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Unidade> listByDisponibilidade(char disponibilidade){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT u from Unidade u where u.disponibilidade = :disponibilidade");
+            query.setParameter("disponibilidade", disponibilidade);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar as unidades com disponibilidade igual a " +disponibilidade+ ". \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Unidade> listByDataCompra(Calendar dataCompra){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT u from Unidade u where u.dataCompra = :dataCompra");
+            query.setParameter("dataCompra", dataCompra);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar as unidades com data de compra igual a " +dataCompra+ ". \nErro: " + e.getMessage());
         }
     }
 }

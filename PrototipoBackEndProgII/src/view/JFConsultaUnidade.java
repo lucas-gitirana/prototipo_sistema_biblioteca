@@ -4,19 +4,77 @@
  */
 package view;
 
+import controller.ControllerConsultaUnidade;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
 /**
  *
  * @author gitir
  */
 public class JFConsultaUnidade extends javax.swing.JFrame {
+    
+    private ControllerConsultaUnidade controller;
 
     /**
      * Creates new form JFConsultaUnidade
      */
     public JFConsultaUnidade() {
+        this.controller = new ControllerConsultaUnidade(this);
         initComponents();
     }
 
+    public ControllerConsultaUnidade getController() {
+        return controller;
+    }
+
+    public void setController(ControllerConsultaUnidade controller) {
+        this.controller = controller;
+    }
+
+    public JButton getjBPesquisar() {
+        return jBPesquisar;
+    }
+
+    public void setjBPesquisar(JButton jBPesquisar) {
+        this.jBPesquisar = jBPesquisar;
+    }
+
+    public JComboBox<String> getjCBFiltros() {
+        return jCBFiltros;
+    }
+
+    public void setjCBFiltros(JComboBox<String> jCBFiltros) {
+        this.jCBFiltros = jCBFiltros;
+    }
+
+    public JCheckBox getjCheckBox1() {
+        return jCheckBox1;
+    }
+
+    public void setjCheckBox1(JCheckBox jCheckBox1) {
+        this.jCheckBox1 = jCheckBox1;
+    }
+
+    public JTable getjTableUnidades() {
+        return jTableUnidades;
+    }
+
+    public void setjTableUnidades(JTable jTableUnidades) {
+        this.jTableUnidades = jTableUnidades;
+    }
+
+    public JTextField getJtPesquisa() {
+        return jtPesquisa;
+    }
+
+    public void setJtPesquisa(JTextField jtPesquisa) {
+        this.jtPesquisa = jtPesquisa;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,8 +85,8 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     private void initComponents() {
 
         jtPesquisa = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jcbListaFiltros = new javax.swing.JComboBox<>();
+        jBPesquisar = new javax.swing.JButton();
+        jCBFiltros = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableUnidades = new javax.swing.JTable();
         jbIncluir = new javax.swing.JButton();
@@ -38,6 +96,11 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jtPesquisa.setMargin(new java.awt.Insets(0, 6, 0, 6));
         jtPesquisa.addActionListener(new java.awt.event.ActionListener() {
@@ -46,17 +109,17 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jBPesquisar.setText("Buscar");
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jBPesquisarActionPerformed(evt);
             }
         });
 
-        jcbListaFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data de Compra", "Livro", " " }));
-        jcbListaFiltros.addActionListener(new java.awt.event.ActionListener() {
+        jCBFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Código - Livro", "Disponibilidade", "Data de Compra", " " }));
+        jCBFiltros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbListaFiltrosActionPerformed(evt);
+                jCBFiltrosActionPerformed(evt);
             }
         });
 
@@ -110,11 +173,11 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jcbListaFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCBFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4))
+                                .addComponent(jBPesquisar))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jbIncluir)
@@ -135,9 +198,9 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                     .addComponent(jCheckBox1))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbListaFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCBFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jBPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -155,13 +218,13 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtPesquisaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //this.getController().pesquisar();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jBPesquisarActionPerformed
 
-    private void jcbListaFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbListaFiltrosActionPerformed
+    private void jCBFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFiltrosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jcbListaFiltrosActionPerformed
+    }//GEN-LAST:event_jCBFiltrosActionPerformed
 
     private void jbIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluirActionPerformed
         JFManutencaoUnidade cadastrarUnidade = new JFManutencaoUnidade();
@@ -177,6 +240,10 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.getController().pesquisar();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -214,7 +281,8 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jBPesquisar;
+    private javax.swing.JComboBox<String> jCBFiltros;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -222,7 +290,6 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbIncluir;
-    private javax.swing.JComboBox<String> jcbListaFiltros;
     private javax.swing.JTextField jtPesquisa;
     // End of variables declaration//GEN-END:variables
 }
