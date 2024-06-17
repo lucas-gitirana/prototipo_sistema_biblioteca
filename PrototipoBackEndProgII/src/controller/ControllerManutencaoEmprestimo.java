@@ -7,6 +7,7 @@ package controller;
 import dao.DaoEmprestimo;
 import dao.DaoFuncionario;
 import dao.DaoMembro;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,14 +57,11 @@ public class ControllerManutencaoEmprestimo {
         this.emprestimo = emprestimo;
     }
     
-    public boolean gravarEmprestimo(){
-        try {
-            //int id = Integer.parseInt(this.getView().getjTId().getText());
-            Long idMembro = Long.parseLong(this.getView().getjTIdCliente().getText());
+    private Emprestimo getEmprestimoFromScreen() throws ParseException{
+        Long idMembro = Long.parseLong(this.getView().getjTIdCliente().getText());
             Long idFuncionario = Long.parseLong(this.getView().getjTIdFuncionario().getText());
-            Double valor = Double.parseDouble(this.getView().getjTValor().getText());
             String emprestimoData = this.getView().getjTDataEmprestimo().getText();
-            String devolucao = this.getView().getjTDataDevolucao().getText();
+            String devolucao = this.getView().getjTDataDevolucao().getText();            
             
             Membro membro = getMembro(idMembro);
             Funcionario funcionario = getFuncionario(idFuncionario);
@@ -77,9 +75,14 @@ public class ControllerManutencaoEmprestimo {
             date = dateFormat.parse(devolucao);
             dataDevolucao.setTime(date);
             
-            if(membro != null && funcionario != null){
-                Emprestimo emprestimo = new Emprestimo(dataEmprestimo, dataDevolucao, valor, membro, funcionario);
-                this.getDaoEmprestimo().insert(emprestimo);
+            Emprestimo emprestimo = new Emprestimo(dataEmprestimo, dataDevolucao, 0.00, membro, funcionario);
+            return emprestimo;
+    }
+    
+    public boolean gravarEmprestimo(){
+        try {
+            if(this.getEmprestimoFromScreen().getMembro() != null && this.getEmprestimoFromScreen().getFuncionario() != null){
+                this.getDaoEmprestimo().insert(this.getEmprestimoFromScreen());
                 JOptionPane.showMessageDialog(this.getView(), "Empréstimo gravado com sucesso!");
                 this.getView().getjBLimpar().doClick();
             } else {                
@@ -89,6 +92,24 @@ public class ControllerManutencaoEmprestimo {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.getView(), e.getMessage());
             return false;
+        }
+    }
+    
+    public void alterarEmprestimo() {
+        try {
+            if(this.getEmprestimoFromScreen().getMembro() != null && this.getEmprestimoFromScreen().getFuncionario() != null){
+                this.getEmprestimo().setDataDataDevolucaoEsperada(this.getEmprestimoFromScreen().getDataDataDevolucaoEsperada());
+                this.getEmprestimo().setDataDevolucaoReal(this.getEmprestimoFromScreen().getDataDevolucaoReal());
+                this.getEmprestimo().setDataEmprestimo(this.getEmprestimoFromScreen().getDataEmprestimo());
+                this.getEmprestimo().setFuncionario(this.getEmprestimoFromScreen().getFuncionario());
+                this.getEmprestimo().setMembro(this.getEmprestimoFromScreen().getMembro());
+                this.getEmprestimo().setValorEmprestimo(this.getEmprestimoFromScreen().getValorEmprestimo());
+                this.daoEmprestimo.update(this.getEmprestimo());
+                this.getView().getjBLimpar().doClick();
+                JOptionPane.showMessageDialog(view, "Empréstimo alterado com sucesso!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.getView(), "O empréstimo informado não existe.");
         }
     }
     
@@ -118,5 +139,13 @@ public class ControllerManutencaoEmprestimo {
             JOptionPane.showMessageDialog(this.getView(), e.getMessage());
             return null;
         }
-    }    
+    }
+
+    public void excluirEmprestimo() {
+        try {
+            this.getDaoEmprestimo().delete(this.getDaoEmprestimo().list(this.getEmprestimo().getId()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Não foi possível excluir o empréstimo. Erro: "+e.getMessage());
+        }
+    }
 }

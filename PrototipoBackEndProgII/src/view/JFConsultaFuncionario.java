@@ -8,6 +8,8 @@ import controller.ControllerConsultaFuncionario;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -23,6 +25,21 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
     public JFConsultaFuncionario() {
         this.controller = new ControllerConsultaFuncionario(this);
         initComponents();
+        
+        jTableFuncionarios.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                // Verifica se há alguma linha selecionada
+                if (!e.getValueIsAdjusting() && jTableFuncionarios.getSelectedRow() != -1) {
+                    // Habilita o botão porque há uma linha selecionada
+                    jBAlterar.setEnabled(true);
+                    jBExcluir.setEnabled(true);
+                } else {
+                    // Desabilita o botão porque nenhuma linha está selecionada
+                    jBAlterar.setEnabled(false);
+                    jBExcluir.setEnabled(false);
+                }
+            }
+        });
     }
 
     public ControllerConsultaFuncionario getController() {
@@ -131,6 +148,7 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
         });
 
         jBAlterar.setText("Alterar");
+        jBAlterar.setEnabled(false);
         jBAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAlterarActionPerformed(evt);
@@ -138,6 +156,7 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
         });
 
         jBExcluir.setText("Excluir");
+        jBExcluir.setEnabled(false);
         jBExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBExcluirActionPerformed(evt);

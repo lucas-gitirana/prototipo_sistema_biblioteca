@@ -4,19 +4,97 @@
  */
 package view;
 
+import controller.ControllerConsultaEmprestimo;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  *
  * @author gitir
  */
 public class JFConsultaEmprestimo extends javax.swing.JFrame {
+    
+    private ControllerConsultaEmprestimo controller;
 
     /**
      * Creates new form JFConsultaEmprestimo
      */
     public JFConsultaEmprestimo() {
+        this.controller = new ControllerConsultaEmprestimo(this);
         initComponents();
+        
+        jTableEmprestimos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                // Verifica se há alguma linha selecionada
+                if (!e.getValueIsAdjusting() && jTableEmprestimos.getSelectedRow() != -1) {
+                    // Habilita o botão porque há uma linha selecionada
+                    jbAlterar.setEnabled(true);
+                    jbExcluir.setEnabled(true);
+                    jbConcluir.setEnabled(true);
+                    jbUnidades.setEnabled(true);
+                } else {
+                    // Desabilita o botão porque nenhuma linha está selecionada
+                    jbAlterar.setEnabled(false);
+                    jbExcluir.setEnabled(false);
+                    jbConcluir.setEnabled(false);
+                    jbUnidades.setEnabled(false);
+                }
+            }
+        });
     }
 
+    public ControllerConsultaEmprestimo getController() {
+        return controller;
+    }
+
+    public void setController(ControllerConsultaEmprestimo controller) {
+        this.controller = controller;
+    }
+
+    public JTable getjTableEmprestimos() {
+        return jTableEmprestimos;
+    }
+
+    public void setjTableEmprestimos(JTable jTableEmprestimos) {
+        this.jTableEmprestimos = jTableEmprestimos;
+    }
+
+    public JButton getJbAlterar() {
+        return jbAlterar;
+    }
+
+    public void setJbAlterar(JButton jbAlterar) {
+        this.jbAlterar = jbAlterar;
+    }
+
+    public JButton getJbExcluir() {
+        return jbExcluir;
+    }
+
+    public void setJbExcluir(JButton jbExcluir) {
+        this.jbExcluir = jbExcluir;
+    }
+
+    public JComboBox<String> getJcbListaFiltros() {
+        return jcbListaFiltros;
+    }
+
+    public void setJcbListaFiltros(JComboBox<String> jcbListaFiltros) {
+        this.jcbListaFiltros = jcbListaFiltros;
+    }
+
+    public JTextField getJtPesquisa() {
+        return jtPesquisa;
+    }
+
+    public void setJtPesquisa(JTextField jtPesquisa) {
+        this.jtPesquisa = jtPesquisa;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,20 +105,23 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
     private void initComponents() {
 
         jtPesquisa = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jBPesquisar = new javax.swing.JButton();
         jcbListaFiltros = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableLivros = new javax.swing.JTable();
+        jTableEmprestimos = new javax.swing.JTable();
         jbIncluir = new javax.swing.JButton();
         jbAlterar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jLabel2 = new javax.swing.JLabel();
-        jbIncluir1 = new javax.swing.JButton();
-        jbIncluir2 = new javax.swing.JButton();
+        jbConcluir = new javax.swing.JButton();
+        jbUnidades = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jtPesquisa.setMargin(new java.awt.Insets(0, 6, 0, 6));
         jtPesquisa.addActionListener(new java.awt.event.ActionListener() {
@@ -49,29 +130,37 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jBPesquisar.setText("Buscar");
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jBPesquisarActionPerformed(evt);
             }
         });
 
-        jcbListaFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Edição", "Autor", "Editora", "Páginas", "Título" }));
+        jcbListaFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Data - Empréstimo", "Data - Devolução Esperada", "Valor", "Membro - Código", "Funcionário - Código", "Data - Devolução Real" }));
         jcbListaFiltros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbListaFiltrosActionPerformed(evt);
             }
         });
 
-        jTableLivros.setModel(new javax.swing.table.DefaultTableModel(
+        jTableEmprestimos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Empréstimo", "Dev. Esperada", "Valor", "Membro", "Funcionário"
+                "Id", "Empréstimo", "Dev. Esperada", "Valor", "Membro", "Funcionário", "Dev. Real"
             }
-        ));
-        jScrollPane1.setViewportView(jTableLivros);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableEmprestimos);
 
         jbIncluir.setText("Incluir");
         jbIncluir.addActionListener(new java.awt.event.ActionListener() {
@@ -81,6 +170,7 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         });
 
         jbAlterar.setText("Alterar");
+        jbAlterar.setEnabled(false);
         jbAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAlterarActionPerformed(evt);
@@ -88,30 +178,29 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.setEnabled(false);
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Empréstimos");
 
-        jCheckBox1.setText("Apenas abertos");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jbConcluir.setText("Concluir");
+        jbConcluir.setEnabled(false);
+        jbConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jbConcluirActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Empréstimo Aberto/ Empréstimo devolvido em:  15/06/2024 (com multa de R$ 2,00).");
-
-        jbIncluir1.setText("Finalizar");
-        jbIncluir1.addActionListener(new java.awt.event.ActionListener() {
+        jbUnidades.setText("Unidades");
+        jbUnidades.setEnabled(false);
+        jbUnidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbIncluir1ActionPerformed(evt);
-            }
-        });
-
-        jbIncluir2.setText("Valores");
-        jbIncluir2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbIncluir2ActionPerformed(evt);
+                jbUnidadesActionPerformed(evt);
             }
         });
 
@@ -123,41 +212,37 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
-                        .addComponent(jbIncluir2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbUnidades)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbIncluir1)
+                        .addComponent(jbConcluir)
                         .addGap(55, 55, 55)
                         .addComponent(jbIncluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbExcluir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCheckBox1))
-                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jcbListaFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jcbListaFiltros, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtPesquisa)
+                        .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)))
+                        .addComponent(jBPesquisar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jCheckBox1))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
+                    .addComponent(jBPesquisar)
                     .addComponent(jcbListaFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,9 +251,8 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
                     .addComponent(jbExcluir)
                     .addComponent(jbAlterar)
                     .addComponent(jbIncluir)
-                    .addComponent(jLabel2)
-                    .addComponent(jbIncluir1)
-                    .addComponent(jbIncluir2))
+                    .addComponent(jbConcluir)
+                    .addComponent(jbUnidades))
                 .addGap(12, 12, 12))
         );
 
@@ -179,9 +263,9 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtPesquisaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //this.getController().pesquisar();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jBPesquisarActionPerformed
 
     private void jcbListaFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbListaFiltrosActionPerformed
         // TODO add your handling code here:
@@ -193,22 +277,31 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_jbIncluirActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        //JFCadastroLivro cadastroLivro = new JFCadastroLivro();
-        //cadastroLivro.getController().setLivro(this.getController().getLivroSelecionado());
-        //cadastroLivro.setVisible(true);
+        JFManutencaoEmprestimo manEmprestimo = new JFManutencaoEmprestimo();
+        manEmprestimo.getController().setEmprestimo(this.getController().getEmprestimoSelecionado());
+        manEmprestimo.setVisible(true);
     }//GEN-LAST:event_jbAlterarActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void jbConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConcluirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jbConcluirActionPerformed
 
-    private void jbIncluir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluir1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbIncluir1ActionPerformed
+    private void jbUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUnidadesActionPerformed
+        JFConsultaUnidadeEmprestimo unidadeEmprestimo = new JFConsultaUnidadeEmprestimo();
+        unidadeEmprestimo.getController().setEmprestimo(this.getController().getEmprestimoSelecionado());
+        unidadeEmprestimo.setVisible(true);
+    }//GEN-LAST:event_jbUnidadesActionPerformed
 
-    private void jbIncluir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluir2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbIncluir2ActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.getController().pesquisar();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        JFManutencaoEmprestimo manEmprestimo = new JFManutencaoEmprestimo();
+        manEmprestimo.getController().setEmprestimo(this.getController().getEmprestimoSelecionado());
+        manEmprestimo.getController().excluirEmprestimo();
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,17 +339,15 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jBPesquisar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableLivros;
+    private javax.swing.JTable jTableEmprestimos;
     private javax.swing.JButton jbAlterar;
+    private javax.swing.JButton jbConcluir;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbIncluir;
-    private javax.swing.JButton jbIncluir1;
-    private javax.swing.JButton jbIncluir2;
+    private javax.swing.JButton jbUnidades;
     private javax.swing.JComboBox<String> jcbListaFiltros;
     private javax.swing.JTextField jtPesquisa;
     // End of variables declaration//GEN-END:variables

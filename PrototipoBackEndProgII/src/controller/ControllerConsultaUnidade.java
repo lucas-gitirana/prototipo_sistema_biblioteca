@@ -50,7 +50,7 @@ public class ControllerConsultaUnidade {
         return (DefaultTableModel) this.view.getjTableUnidades().getModel();
     }
     
-    public void pesquisar(){        
+    public void pesquisar(){
         try {
             String filtroSelecionado = (String) this.getView().getjCBFiltros().getSelectedItem();
             List<Unidade> livros = null;

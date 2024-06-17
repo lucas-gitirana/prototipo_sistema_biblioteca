@@ -9,6 +9,8 @@ import controller.ControllerManutencaoLivro;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -21,6 +23,21 @@ public class JFConsultaLivro extends javax.swing.JFrame {
     public JFConsultaLivro() {
         this.controller = new ControllerConsultaLivro(this);
         initComponents();
+        
+        jTableLivros.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                // Verifica se há alguma linha selecionada
+                if (!e.getValueIsAdjusting() && jTableLivros.getSelectedRow() != -1) {
+                    // Habilita o botão porque há uma linha selecionada
+                    jbAlterar.setEnabled(true);
+                    jbExcluir.setEnabled(true);
+                } else {
+                    // Desabilita o botão porque nenhuma linha está selecionada
+                    jbAlterar.setEnabled(false);
+                    jbExcluir.setEnabled(false);
+                }
+            }
+        });
     }
 
     public ControllerConsultaLivro getController() {
@@ -107,7 +124,15 @@ public class JFConsultaLivro extends javax.swing.JFrame {
             new String [] {
                 "Id", "Edição", "Autor", "Editora", "Páginas", "Título"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableLivros);
 
         jbIncluir.setText("Incluir");
@@ -118,6 +143,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         });
 
         jbAlterar.setText("Alterar");
+        jbAlterar.setEnabled(false);
         jbAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAlterarActionPerformed(evt);
@@ -125,6 +151,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.setEnabled(false);
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbExcluirActionPerformed(evt);
@@ -235,7 +262,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         cadastroLivro.getController().excluirLivro();
         this.getController().pesquisar();
     }//GEN-LAST:event_jbExcluirActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */

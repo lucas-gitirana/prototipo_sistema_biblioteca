@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -24,6 +26,21 @@ public class JFConsultaCliente extends javax.swing.JFrame {
     public JFConsultaCliente() {
         this.controller = new ControllerConsultaMembro(this);
         initComponents();
+        
+        jTableMembros.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                // Verifica se há alguma linha selecionada
+                if (!e.getValueIsAdjusting() && jTableMembros.getSelectedRow() != -1) {
+                    // Habilita o botão porque há uma linha selecionada
+                    jBAlterar.setEnabled(true);
+                    jBExcluir.setEnabled(true);
+                } else {
+                    // Desabilita o botão porque nenhuma linha está selecionada
+                    jBAlterar.setEnabled(false);
+                    jBExcluir.setEnabled(false);
+                }
+            }
+        });
     }
 
     public ControllerConsultaMembro getController() {
@@ -85,7 +102,7 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         jTableMembros = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jBAlterar = new javax.swing.JButton();
-        jExcluir = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -118,7 +135,15 @@ public class JFConsultaCliente extends javax.swing.JFrame {
             new String [] {
                 "Id", "CPF", "Nome", "Data de Nascimento", "Data de Cadastro", "Plano", "Status"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTableMembros);
 
         jButton1.setText("Incluir");
@@ -129,16 +154,18 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         });
 
         jBAlterar.setText("Alterar");
+        jBAlterar.setEnabled(false);
         jBAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBAlterarActionPerformed(evt);
             }
         });
 
-        jExcluir.setText("Excluir");
-        jExcluir.addActionListener(new java.awt.event.ActionListener() {
+        jBExcluir.setText("Excluir");
+        jBExcluir.setEnabled(false);
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jExcluirActionPerformed(evt);
+                jBExcluirActionPerformed(evt);
             }
         });
 
@@ -179,7 +206,7 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jExcluir))
+                        .addComponent(jBExcluir))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -208,7 +235,7 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jExcluir)
+                    .addComponent(jBExcluir)
                     .addComponent(jBAlterar)
                     .addComponent(jButton1))
                 .addContainerGap())
@@ -244,12 +271,12 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         this.getController().pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jExcluirActionPerformed
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
         JFCadastroCliente cadastroCliente = new JFCadastroCliente();
         cadastroCliente.getController().setMembro(this.getController().getMembroSelecionado());
         cadastroCliente.getController().excluirMembro();
         this.getController().pesquisar();
-    }//GEN-LAST:event_jExcluirActionPerformed
+    }//GEN-LAST:event_jBExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,6 +322,7 @@ public class JFConsultaCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAlterar;
+    private javax.swing.JButton jBExcluir;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jCBFiltro;
@@ -302,7 +330,6 @@ public class JFConsultaCliente extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JButton jExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;

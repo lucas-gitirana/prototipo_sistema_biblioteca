@@ -5,6 +5,7 @@
 package view;
 
 import controller.ControllerManutencaoEmprestimo;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -104,14 +105,6 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
     public void setjTIdFuncionario(JTextField jTIdFuncionario) {
         this.jTIdFuncionario = jTIdFuncionario;
     }
-
-    public JTextField getjTValor() {
-        return jTValor;
-    }
-
-    public void setjTValor(JTextField jTValor) {
-        this.jTValor = jTValor;
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -126,7 +119,7 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jTDataDevolucao = new javax.swing.JTextField();
         jTDataEmprestimo = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jLTituloPagina = new javax.swing.JLabel();
         jTIdCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTIdFuncionario = new javax.swing.JTextField();
@@ -137,10 +130,13 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jBConsCliente = new javax.swing.JButton();
         jBConsFuncionario = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jTValor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Cliente");
@@ -160,8 +156,8 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Cadastrar Empréstimo");
+        jLTituloPagina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLTituloPagina.setText("Cadastrar Empréstimo");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
@@ -205,14 +201,6 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Valor");
-
-        jTValor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTValorActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,7 +209,7 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -232,13 +220,11 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTDataEmprestimo)
                             .addComponent(jTDataDevolucao)
-                            .addComponent(jTId)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jBLimpar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -251,14 +237,14 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jBConsFuncionario)
                                     .addComponent(jBConsCliente)))
-                            .addComponent(jTValor, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTId))))
                 .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLTituloPagina)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -281,11 +267,7 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
                     .addComponent(jBConsFuncionario)
                     .addComponent(jTIdFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBGravar)
                     .addComponent(jBLimpar))
@@ -308,17 +290,19 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
         if(!validaCampos.isBlank()){
             JOptionPane.showMessageDialog(rootPane, validaCampos);
         } else {
-            this.getController().gravarEmprestimo();
+            if(this.getController().getEmprestimo()!= null){
+                this.getController().alterarEmprestimo();
+            } else {
+                this.getController().gravarEmprestimo();
+            }
         }
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-        jTId.setText("");
         jTDataDevolucao.setText("");
         jTDataEmprestimo.setText("");
         jTIdCliente.setText("");
         jTIdFuncionario.setText("");
-        jTValor.setText("");
     }//GEN-LAST:event_jBLimparActionPerformed
 
     private void jBConsClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConsClienteActionPerformed
@@ -331,9 +315,18 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
         consultaFuncionario.setVisible(true);
     }//GEN-LAST:event_jBConsFuncionarioActionPerformed
 
-    private void jTValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTValorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTValorActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.getController().getEmprestimo() != null){
+            jTId.setText(String.valueOf(this.getController().getEmprestimo().getId()));
+            jTIdCliente.setText(String.valueOf(this.getController().getEmprestimo().getMembro().getId()));
+            jTIdFuncionario.setText(String.valueOf(this.getController().getEmprestimo().getFuncionario().getId()));
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            jTDataDevolucao.setText(sdf.format(this.getController().getEmprestimo().getDataDataDevolucaoEsperada().getTime()));
+            jTDataEmprestimo.setText(sdf.format(this.getController().getEmprestimo().getDataEmprestimo().getTime()));
+            jLTituloPagina.setText("Alterar Empréstimo");
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private String validaCampos(){
         String msg = "";
@@ -351,9 +344,6 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
         }
         if(jTIdFuncionario.getText().isBlank()){
             msg += "\n- O campo Funcionário não pode ser vazio!";
-        }
-        if(jTValor.getText().isBlank()){
-            msg += "\n- O campo Valor não pode ser vazio!";
         }
         return msg;
     }
@@ -398,18 +388,16 @@ public class JFManutencaoEmprestimo extends javax.swing.JFrame {
     private javax.swing.JButton jBConsFuncionario;
     private javax.swing.JButton jBGravar;
     private javax.swing.JButton jBLimpar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLTituloPagina;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField jTDataDevolucao;
     private javax.swing.JTextField jTDataEmprestimo;
     private javax.swing.JTextField jTId;
     private javax.swing.JTextField jTIdCliente;
     private javax.swing.JTextField jTIdFuncionario;
-    private javax.swing.JTextField jTValor;
     // End of variables declaration//GEN-END:variables
 }

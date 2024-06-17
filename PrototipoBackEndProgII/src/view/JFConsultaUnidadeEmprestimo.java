@@ -4,51 +4,33 @@
  */
 package view;
 
-import controller.ControllerConsultaUnidade;
+import controller.ControllerConsultaUnidadeEmprestimo;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author gitir
  */
-public class JFConsultaUnidade extends javax.swing.JFrame {
+public class JFConsultaUnidadeEmprestimo extends javax.swing.JFrame {
     
-    private ControllerConsultaUnidade controller;
+    ControllerConsultaUnidadeEmprestimo controller;
 
     /**
-     * Creates new form JFConsultaUnidade
+     * Creates new form JFUnidadeEmprestimo
      */
-    public JFConsultaUnidade() {
-        this.controller = new ControllerConsultaUnidade(this);
+    public JFConsultaUnidadeEmprestimo() {
+        this.controller = new ControllerConsultaUnidadeEmprestimo(this);
         initComponents();
-        
-        jTableUnidades.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                // Verifica se há alguma linha selecionada
-                if (!e.getValueIsAdjusting() && jTableUnidades.getSelectedRow() != -1) {
-                    // Habilita o botão porque há uma linha selecionada
-                    jbAlterar.setEnabled(true);
-                    jbExcluir.setEnabled(true);
-                } else {
-                    // Desabilita o botão porque nenhuma linha está selecionada
-                    jbAlterar.setEnabled(false);
-                    jbExcluir.setEnabled(false);
-                }
-            }
-        });
     }
 
-    public ControllerConsultaUnidade getController() {
+    public ControllerConsultaUnidadeEmprestimo getController() {
         return controller;
     }
 
-    public void setController(ControllerConsultaUnidade controller) {
+    public void setController(ControllerConsultaUnidadeEmprestimo controller) {
         this.controller = controller;
     }
 
@@ -68,12 +50,12 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
         this.jCBFiltros = jCBFiltros;
     }
 
-    public JTable getjTableUnidades() {
-        return jTableUnidades;
+    public JTable getjTableUnidadesEmprestimo() {
+        return jTableUnidadesEmprestimo;
     }
 
-    public void setjTableUnidades(JTable jTableUnidades) {
-        this.jTableUnidades = jTableUnidades;
+    public void setjTableUnidadesEmprestimo(JTable jTableUnidadesEmprestimo) {
+        this.jTableUnidadesEmprestimo = jTableUnidadesEmprestimo;
     }
 
     public JTextField getJtPesquisa() {
@@ -83,7 +65,7 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     public void setJtPesquisa(JTextField jtPesquisa) {
         this.jtPesquisa = jtPesquisa;
     }
-    
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -93,20 +75,29 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jCBFiltros = new javax.swing.JComboBox<>();
         jtPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
-        jCBFiltros = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUnidades = new javax.swing.JTable();
+        jTableUnidadesEmprestimo = new javax.swing.JTable();
         jbIncluir = new javax.swing.JButton();
-        jbAlterar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setText("Consultar Unidades do Empréstimo");
+
+        jCBFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidade - Código", "Unidade - Livro", " ", " " }));
+        jCBFiltros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBFiltrosActionPerformed(evt);
             }
         });
 
@@ -124,43 +115,28 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
             }
         });
 
-        jCBFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Id", "Código - Livro", "Disponibilidade", "Data de Compra", " " }));
-        jCBFiltros.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBFiltrosActionPerformed(evt);
-            }
-        });
-
-        jTableUnidades.setModel(new javax.swing.table.DefaultTableModel(
+        jTableUnidadesEmprestimo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Livro", "Disponibilidade", "Data da Compra"
+                "Unidade - Código", "Unidade - Livro"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableUnidades);
+        jScrollPane1.setViewportView(jTableUnidadesEmprestimo);
 
         jbIncluir.setText("Incluir");
         jbIncluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbIncluirActionPerformed(evt);
-            }
-        });
-
-        jbAlterar.setText("Alterar");
-        jbAlterar.setEnabled(false);
-        jbAlterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbAlterarActionPerformed(evt);
             }
         });
 
@@ -171,9 +147,6 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                 jbExcluirActionPerformed(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Consultar Unidades");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,8 +166,6 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jbIncluir)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jbAlterar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jbExcluir))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -210,17 +181,20 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                     .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbExcluir)
-                    .addComponent(jbAlterar)
                     .addComponent(jbIncluir))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCBFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFiltrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBFiltrosActionPerformed
 
     private void jtPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtPesquisaActionPerformed
         // TODO add your handling code here:
@@ -230,31 +204,22 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
         this.getController().pesquisar();
     }//GEN-LAST:event_jBPesquisarActionPerformed
 
-    private void jCBFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBFiltrosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCBFiltrosActionPerformed
-
     private void jbIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIncluirActionPerformed
-        JFManutencaoUnidade cadastrarUnidade = new JFManutencaoUnidade();
+        JFManutencaoUnidadeEmprestimo cadastrarUnidade = new JFManutencaoUnidadeEmprestimo();
+        cadastrarUnidade.getController().setEmprestimo(this.getController().getEmprestimo());
         cadastrarUnidade.setVisible(true);
     }//GEN-LAST:event_jbIncluirActionPerformed
 
-    private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        JFManutencaoUnidade manUnidadte = new JFManutencaoUnidade();
-        manUnidadte.getController().setUnidade(this.getController().getUnidadeSelecionada());
-        manUnidadte.setVisible(true);
-    }//GEN-LAST:event_jbAlterarActionPerformed
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        //JFManutencaoUnidade manUnidade = new JFManutencaoUnidade();
+        //manUnidade.getController().setUnidade(this.getController().getUnidadeSelecionada());
+        //manUnidade.getController().excluirUnidade();
+        //this.getController().pesquisar();
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.getController().pesquisar();
     }//GEN-LAST:event_formWindowOpened
-
-    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        JFManutencaoUnidade manUnidade = new JFManutencaoUnidade();
-        manUnidade.getController().setUnidade(this.getController().getUnidadeSelecionada());
-        manUnidade.getController().excluirUnidade();
-        this.getController().pesquisar();
-    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,20 +238,21 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFConsultaUnidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFConsultaUnidadeEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFConsultaUnidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFConsultaUnidadeEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFConsultaUnidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFConsultaUnidadeEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFConsultaUnidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFConsultaUnidadeEmprestimo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFConsultaUnidade().setVisible(true);
+                new JFConsultaUnidadeEmprestimo().setVisible(true);
             }
         });
     }
@@ -296,8 +262,7 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBFiltros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableUnidades;
-    private javax.swing.JButton jbAlterar;
+    private javax.swing.JTable jTableUnidadesEmprestimo;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JTextField jtPesquisa;

@@ -4,9 +4,11 @@
  */
 package dao;
 
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Query;
 import model.Emprestimo;
+import model.Unidade;
 
 /**
  *
@@ -69,6 +71,94 @@ public class DaoEmprestimo extends Dao<Emprestimo>{
         } catch (Exception e) {
             this.getEntityManager().close();
             throw new RuntimeException("Não foi possível carregar os empréstimos. Erro: " + e.getMessage());
+        }
+    }
+    
+    public List<Unidade> listUnidades(Long id){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e.unidades from Emprestimo e where e.id = :id");
+            query.setParameter("id", id);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar os empréstimos. Erro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listById(Long id){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.id = :id");
+            query.setParameter("id", id);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo de id " + id + ". \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByDataEmprestimo(Calendar dataEmprestimo){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.dataEmprestimo = :dataEmprestimo");
+            query.setParameter("dataEmprestimo", dataEmprestimo);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com a data de empréstimo informada. \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByDataDevolucaoEsperada(Calendar dataDevolucaoEsperada){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.dataDataDevolucaoEsperada = :dataDevolucaoEsperada");
+            query.setParameter("dataDevolucaoEsperada", dataDevolucaoEsperada);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com a data de dev. esperada informada. \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByDataDevolucaoReal(Calendar dataDevolucaoReal){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.dataDevolucaoReal = :dataDevolucaoReal");
+            query.setParameter("dataDevolucaoReal", dataDevolucaoReal);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com a data de dev. real informada. \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByValor(Double valor){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.valorEmprestimo = :valor");
+            query.setParameter("valor", valor);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com o valor informado. \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByIdMembro(int idMembro){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.membro.id = :idMembro");
+            query.setParameter("idMembro", idMembro);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com o membro informado. \nErro: " + e.getMessage());
+        }
+    }
+    
+    public List<Emprestimo> listByIdFuncionario(int idFuncionario){
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT e from Emprestimo e where e.funcionario.id = :idFuncionario");
+            query.setParameter("idFuncionario", idFuncionario);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar o empréstimo com o funcionário informado. \nErro: " + e.getMessage());
         }
     }
 }

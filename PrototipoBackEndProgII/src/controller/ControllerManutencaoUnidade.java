@@ -25,8 +25,7 @@ public class ControllerManutencaoUnidade {
     private JFManutencaoUnidade view;
     private Unidade unidade;
 
-    public ControllerManutencaoUnidade(JFManutencaoUnidade view) {
-        super();
+    public ControllerManutencaoUnidade(JFManutencaoUnidade view) {        
         this.daoUnidade = new DaoUnidade();
         this.view = view;        
     }
