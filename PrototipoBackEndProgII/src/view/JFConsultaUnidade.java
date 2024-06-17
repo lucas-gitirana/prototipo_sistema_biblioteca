@@ -148,6 +148,11 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
         });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Unidades");
@@ -232,9 +237,9 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     }//GEN-LAST:event_jbIncluirActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        //JFCadastroLivro cadastroLivro = new JFCadastroLivro();
-        //cadastroLivro.getController().setLivro(this.getController().getLivroSelecionado());
-        //cadastroLivro.setVisible(true);
+        JFManutencaoUnidade manUnidadte = new JFManutencaoUnidade();
+        manUnidadte.getController().setUnidade(this.getController().getUnidadeSelecionada());
+        manUnidadte.setVisible(true);
     }//GEN-LAST:event_jbAlterarActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -244,6 +249,13 @@ public class JFConsultaUnidade extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.getController().pesquisar();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        JFManutencaoUnidade manUnidade = new JFManutencaoUnidade();
+        manUnidade.getController().setUnidade(this.getController().getUnidadeSelecionada());
+        manUnidade.getController().excluirUnidade();
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments

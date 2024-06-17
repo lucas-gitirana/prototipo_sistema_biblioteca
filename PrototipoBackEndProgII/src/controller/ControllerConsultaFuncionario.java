@@ -117,19 +117,14 @@ public class ControllerConsultaFuncionario {
         table.setRowCount(0);
     }
     
-    //public Funcionario getFuncionarioSelecionado(){
-        /*int linha = this.getView().getjTableFuncionarios().getSelectedRow();
-        
-        Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
-        String edicao = this.getTableFromScreen().getValueAt(linha, 1).toString();
-        String nomeAutor = this.getTableFromScreen().getValueAt(linha, 2).toString();
-        String nomeEditora = this.getTableFromScreen().getValueAt(linha, 3).toString();
-        int numPaginas = Integer.parseInt(this.getTableFromScreen().getValueAt(linha, 4).toString());
-        String titulo = this.getTableFromScreen().getValueAt(linha, 5).toString();
-        
-        Funcionario f = new Funcionario(titulo, nomeAutor, nomeEditora, numPaginas, edicao);
-        livro.setId(id);
-        return livro;*/
-    //}
-    
+    public Funcionario getFuncionarioSelecionado(){
+        try {
+            int linha = this.getView().getjTableFuncionarios().getSelectedRow();
+            Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
+            return this.getDaoFuncionario().list(id);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this.getView(), "Não foi possível carregar o funcionário. Erro: "+e.getMessage());
+            return null;
+        }
+    }    
 }

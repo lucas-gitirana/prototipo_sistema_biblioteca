@@ -105,4 +105,15 @@ public class ControllerConsultaUnidade {
         table.setRowCount(0);
     }
     
+    public Unidade getUnidadeSelecionada(){
+        try {
+            int linha = this.getView().getjTableUnidades().getSelectedRow();
+            Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
+            return this.getDaoUnidade().list(id);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this.getView(), "Não foi possível carregar a unidade. Erro: "+e.getMessage());
+            return null;
+        }
+    }
+    
 }

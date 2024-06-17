@@ -7,6 +7,7 @@ package view;
 import controller.ControllerConsultaLivro;
 import controller.ControllerManutencaoMembro;
 import dao.DaoLivro;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -119,7 +120,7 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTTitulo = new javax.swing.JLabel();
+        jLTituloPagina = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -138,9 +139,14 @@ public class JFCadastroCliente extends javax.swing.JFrame {
         jCBStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jTTitulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTTitulo.setText("Cadastrar Cliente");
+        jLTituloPagina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLTituloPagina.setText("Cadastrar Cliente");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
@@ -208,7 +214,7 @@ public class JFCadastroCliente extends javax.swing.JFrame {
                         .addComponent(jBLimpar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBGravar))
-                    .addComponent(jTTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLTituloPagina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -238,7 +244,7 @@ public class JFCadastroCliente extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTTitulo)
+                .addComponent(jLTituloPagina)
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -289,7 +295,11 @@ public class JFCadastroCliente extends javax.swing.JFrame {
         if(!validaCampos.isBlank()){
             JOptionPane.showMessageDialog(rootPane, validaCampos);
         } else {
-            this.getController().gravarMembro();
+            if(this.getController().getMembro() != null){
+                this.getController().alterarMembro();
+            } else {
+                this.getController().gravarMembro();
+            }
         } 
     }//GEN-LAST:event_jBGravarActionPerformed
 
@@ -301,6 +311,37 @@ public class JFCadastroCliente extends javax.swing.JFrame {
        jCBPlano.setSelectedIndex(0);
        jCBStatus.setSelectedIndex(0);
     }//GEN-LAST:event_jBLimparActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.getController().getMembro() != null){
+            jTId.setText(String.valueOf(this.getController().getMembro().getId()));
+            jTCpf.setText(this.getController().getMembro().getCpf());
+            jTNome.setText(this.getController().getMembro().getNome());
+            
+            switch(this.getController().getMembro().getPlano()){
+                case 'B':
+                    jCBPlano.setSelectedIndex(0);
+                    break;
+                case 'P':
+                    jCBPlano.setSelectedIndex(1);
+                    break;
+            }
+            
+            switch(this.getController().getMembro().getStatus()){
+                case 'A':
+                    jCBStatus.setSelectedIndex(0);
+                    break;
+                case 'I':
+                    jCBStatus.setSelectedIndex(1);
+                    break;
+            }
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            jTNascimento.setText(sdf.format(this.getController().getMembro().getDataNascimento().getTime()));
+            jTCadastro.setText(sdf.format(this.getController().getMembro().getDataCadastro().getTime()));
+            jLTituloPagina.setText("Alterar Membro");
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private String validaCampos(){
         String msg = "";
@@ -366,6 +407,7 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton jBLimpar;
     private javax.swing.JComboBox<String> jCBPlano;
     private javax.swing.JComboBox<String> jCBStatus;
+    private javax.swing.JLabel jLTituloPagina;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -378,6 +420,5 @@ public class JFCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTId;
     private javax.swing.JTextField jTNascimento;
     private javax.swing.JTextField jTNome;
-    private javax.swing.JLabel jTTitulo;
     // End of variables declaration//GEN-END:variables
 }

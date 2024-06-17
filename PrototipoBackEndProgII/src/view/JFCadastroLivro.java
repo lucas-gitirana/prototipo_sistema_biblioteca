@@ -110,7 +110,7 @@ public class JFCadastroLivro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLTituloPagina = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -127,9 +127,14 @@ public class JFCadastroLivro extends javax.swing.JFrame {
         jBLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Cadastrar Livros");
+        jLTituloPagina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLTituloPagina.setText("Cadastrar Livros");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
@@ -191,7 +196,7 @@ public class JFCadastroLivro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLTituloPagina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -216,7 +221,7 @@ public class JFCadastroLivro extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLTituloPagina)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -264,18 +269,33 @@ public class JFCadastroLivro extends javax.swing.JFrame {
         if(!validaCampos.isBlank()){
             JOptionPane.showMessageDialog(rootPane, validaCampos);
         } else {
-            this.getController().gravarLivro();
+            if(this.getController().getLivro() != null){
+                this.getController().alterarLivro();
+            } else {
+                this.getController().gravarLivro();
+            }
         }                
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-       jTId.setText("");
        jTEdicao.setText("");
        jTAutor.setText("");
        jTEditora.setText("");
        jTNumPaginas.setText("");
        jTTitulo.setText("");
     }//GEN-LAST:event_jBLimparActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.getController().getLivro() != null){
+            jTId.setText(String.valueOf(this.getController().getLivro().getId()));
+            jTEdicao.setText(this.getController().getLivro().getEdicao());
+            jTAutor.setText(this.getController().getLivro().getNomeAutor());
+            jTEditora.setText(this.getController().getLivro().getNomeEditora());
+            jTNumPaginas.setText(String.valueOf(this.getController().getLivro().getNumeroPaginas()));
+            jTTitulo.setText(this.getController().getLivro().getTitulo());
+            jLTituloPagina.setText("Alterar livro");
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private String validaCampos(){
         String msg = "";
@@ -338,7 +358,7 @@ public class JFCadastroLivro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBGravar;
     private javax.swing.JButton jBLimpar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLTituloPagina;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

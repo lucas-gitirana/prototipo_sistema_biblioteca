@@ -77,7 +77,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         jbExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtPesquisa = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        jBPesquisar = new javax.swing.JButton();
         jcbListaFiltros = new javax.swing.JComboBox<>();
 
         jScrollPane2.setViewportView(jEditorPane1);
@@ -125,6 +125,11 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         });
 
         jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Livros");
@@ -136,10 +141,10 @@ public class JFConsultaLivro extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Buscar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jBPesquisar.setText("Buscar");
+        jBPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jBPesquisarActionPerformed(evt);
             }
         });
 
@@ -169,7 +174,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jtPesquisa)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton4))
+                            .addComponent(jBPesquisar))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -182,7 +187,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
+                    .addComponent(jBPesquisar)
                     .addComponent(jcbListaFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,9 +225,16 @@ public class JFConsultaLivro extends javax.swing.JFrame {
         this.getController().pesquisar();
     }//GEN-LAST:event_formWindowOpened
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
         this.getController().pesquisar();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        JFCadastroLivro cadastroLivro = new JFCadastroLivro();
+        cadastroLivro.getController().setLivro(this.getController().getLivroSelecionado());
+        cadastroLivro.getController().excluirLivro();
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,7 +275,7 @@ public class JFConsultaLivro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jBPesquisar;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;

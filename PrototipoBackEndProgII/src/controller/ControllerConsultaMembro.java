@@ -116,4 +116,15 @@ public class ControllerConsultaMembro {
         DefaultTableModel table = (DefaultTableModel) this.getView().getjTableMembros().getModel();
         table.setRowCount(0);
     }
+    
+    public Membro getMembroSelecionado(){
+        try {
+            int linha = this.getView().getjTableMembros().getSelectedRow();
+            Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
+            return this.getDaoMembro().list(id);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this.getView(), "Não foi possível carregar o membro. Erro: "+e.getMessage());
+            return null;
+        }
+    }
 }

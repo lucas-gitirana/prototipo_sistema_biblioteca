@@ -39,25 +39,51 @@ public class ControllerManutencaoLivro extends Controller{
         this.livro = livro;
     }
     
+    private Livro getLivroFromScreen(){
+        String titulo = this.view.getjTTitulo().getText();
+        String nomeEditora = this.view.getjTEditora().getText();
+        String nomeAutor = this.view.getjTAutor().getText();
+        int numPaginas = Integer.parseInt(this.view.getjTNumPaginas().getText());
+        String edicao = this.view.getjTEdicao().getText();
+
+        Livro livro = new Livro(titulo, nomeAutor, nomeEditora, numPaginas, edicao);
+        return livro;
+    }
+    
     public boolean gravarLivro(){
         try {
-            //int id = Integer.parseInt(this.getView().getjTId().getText());
-            String titulo = this.view.getjTTitulo().getText();
-            String nomeEditora = this.view.getjTEditora().getText();
-            String nomeAutor = this.view.getjTAutor().getText();
-            int numPaginas = Integer.parseInt(this.view.getjTNumPaginas().getText());
-            String edicao = this.view.getjTEdicao().getText();
-            
-            Livro livro = new Livro(titulo, nomeAutor, nomeEditora, numPaginas, edicao);
-            this.daoLivro.insert(livro);
-            
-            JOptionPane.showMessageDialog(view, "Livro gravado com sucesso!");
+            this.daoLivro.insert(this.getLivroFromScreen());
             this.view.getjBLimpar().doClick();
-            
+            JOptionPane.showMessageDialog(view, "Livro gravado com sucesso!");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(view, e.getMessage());
             return false;
+        }
+    }
+
+    public boolean alterarLivro() {
+        try {
+            this.getLivro().setEdicao(this.getLivroFromScreen().getEdicao());
+            this.getLivro().setNomeAutor(this.getLivroFromScreen().getNomeAutor());
+            this.getLivro().setNomeEditora(this.getLivroFromScreen().getNomeEditora());
+            this.getLivro().setNumeroPaginas(this.getLivroFromScreen().getNumeroPaginas());
+            this.getLivro().setTitulo(this.getLivroFromScreen().getTitulo());
+            this.daoLivro.update(this.getLivro());
+            this.view.getjBLimpar().doClick();
+            JOptionPane.showMessageDialog(view, "Livro alterado com sucesso!");
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, e.getMessage());
+            return false;
+        }
+    }
+
+    public void excluirLivro() {
+        try {
+            this.getDaoLivro().delete(this.getDaoLivro().list(this.getLivro().getId()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Não foi possível excluir o livro. Erro: "+e.getMessage());
         }
     }
 }

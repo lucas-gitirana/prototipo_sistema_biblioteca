@@ -5,6 +5,7 @@
 package controller;
 
 import dao.DaoMembro;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -45,42 +46,59 @@ public class ControllerManutencaoMembro {
         this.view = view;
     }
 
-    public Membro getFuncionario() {
+    public Membro getMembro() {
         return membro;
     }
 
-    public void setFuncionario(Membro funcionario) {
-        this.membro = funcionario;
+    public void setMembro(Membro membro) {
+        this.membro = membro;
+    }
+    
+    private Membro getMembroFromScreen() throws ParseException{
+        String cpf = this.getView().getjTCpf().getText();            
+        String nome = this.getView().getjTNome().getText();
+        String nascimento = this.getView().getjTNascimento().getText();
+        String cadastro = this.getView().getjTCadastro().getText();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Calendar dataCadastro = Calendar.getInstance();
+        Date date = dateFormat.parse(cadastro);
+        dataCadastro.setTime(date);
+
+        Calendar dataNascimento = Calendar.getInstance();
+        date = dateFormat.parse(nascimento);
+        dataNascimento.setTime(date);
+
+        Membro membro = new Membro(cpf, nome, dataNascimento, dataCadastro, getPlano(), getStatus());
+        return membro;       
     }
     
     public boolean gravarMembro(){
         try {
-            //int id = Integer.parseInt(this.getView().getjTId().getText());
-            String cpf = this.getView().getjTCpf().getText();            
-            String nome = this.getView().getjTNome().getText();
-            String nascimento = this.getView().getjTNascimento().getText();
-            String cadastro = this.getView().getjTCadastro().getText();
-            
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            
-            Calendar dataCadastro = Calendar.getInstance();
-            Date date = dateFormat.parse(cadastro);
-            dataCadastro.setTime(date);
-            
-            Calendar dataNascimento = Calendar.getInstance();
-            date = dateFormat.parse(nascimento);
-            dataNascimento.setTime(date);
-            
-            Membro membro = new Membro(cpf, nome, dataNascimento, dataCadastro, getPlano(), getStatus());
-            this.getDaoMembro().insert(membro);
-            
+            this.getDaoMembro().insert(this.getMembroFromScreen());
             JOptionPane.showMessageDialog(this.getView(), "Membro gravado com sucesso!");
             this.getView().getjBLimpar().doClick();
-            
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.getView(), e.getMessage());
             return false;
+        }
+    }
+    
+    public void alterarMembro(){
+        try {
+            this.getMembro().setCpf(this.getMembroFromScreen().getCpf());
+            this.getMembro().setDataCadastro(this.getMembroFromScreen().getDataCadastro());
+            this.getMembro().setDataNascimento(this.getMembroFromScreen().getDataNascimento());
+            this.getMembro().setNome(this.getMembroFromScreen().getNome());
+            this.getMembro().setPlano(this.getMembroFromScreen().getPlano());
+            this.getMembro().setStatus(this.getMembroFromScreen().getStatus());
+            this.daoMembro.update(this.getMembro());
+            this.view.getjBLimpar().doClick();
+            JOptionPane.showMessageDialog(view, "Membro alterado com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
     
@@ -102,6 +120,14 @@ public class ControllerManutencaoMembro {
                 return 'I';
         }
         return 0;
+    }
+
+    public void excluirMembro() {
+        try {
+            this.getDaoMembro().delete(this.getDaoMembro().list(this.getMembro().getId()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Não foi possível excluir o membro. Erro: "+e.getMessage());
+        }
     }
     
 }

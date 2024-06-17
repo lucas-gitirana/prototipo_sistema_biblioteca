@@ -5,6 +5,7 @@
 package view;
 
 import controller.ControllerManutencaoUnidade;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -100,7 +101,7 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
     private void initComponents() {
 
         jTLivro = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        jLTituloPagina = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTId = new javax.swing.JTextField();
         jBGravar = new javax.swing.JButton();
@@ -113,9 +114,14 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
         jBConsLivro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Cadastrar Unidade");
+        jLTituloPagina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLTituloPagina.setText("Cadastrar Unidade");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
@@ -169,7 +175,7 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLTituloPagina, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jBLimpar)
@@ -197,7 +203,7 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLTituloPagina)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -230,12 +236,15 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
         if(!validaCampos.isBlank()){
             JOptionPane.showMessageDialog(rootPane, validaCampos);
         } else {
-            this.getController().gravarUnidade();
+            if(this.getController().getUnidade() != null){
+                this.getController().alterarUnidade();
+            } else {
+                this.getController().gravarUnidade();
+            }
         }
     }//GEN-LAST:event_jBGravarActionPerformed
 
     private void jBLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLimparActionPerformed
-        jTId.setText("");
         jTCompra.setText("");
         jTLivro.setText("");
         jCBDisponibilidade.setSelectedIndex(0);
@@ -250,11 +259,28 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
         consultaLivro.setVisible(true);
     }//GEN-LAST:event_jBConsLivroActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.getController().getUnidade() != null){
+            jTId.setText(String.valueOf(this.getController().getUnidade().getId()));
+            jTLivro.setText(String.valueOf(this.getController().getUnidade().getLivro().getId()));
+            
+            switch(this.getController().getUnidade().getDisponibilidade()){
+                case 'S':
+                    jCBDisponibilidade.setSelectedIndex(0);
+                    break;
+                case 'N':
+                    jCBDisponibilidade.setSelectedIndex(1);
+                    break;
+            }
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            jTCompra.setText(sdf.format(this.getController().getUnidade().getDataCompra().getTime()));
+            jLTituloPagina.setText("Alterar Unidade");
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     private String validaCampos(){
         String msg = "";
-        if(jTId.getText().isBlank()){
-            //msg += "\n O campo Edição não pode ser vazio!";
-        }
         if(jTCompra.getText().isBlank()){
             msg += "\n- O campo Compra não pode ser vazio!";
         }
@@ -307,7 +333,7 @@ public class JFManutencaoUnidade extends javax.swing.JFrame {
     private javax.swing.JButton jBGravar;
     private javax.swing.JButton jBLimpar;
     private javax.swing.JComboBox<String> jCBDisponibilidade;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLTituloPagina;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

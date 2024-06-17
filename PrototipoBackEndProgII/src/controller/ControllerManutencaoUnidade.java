@@ -6,10 +6,10 @@ package controller;
 
 import dao.DaoLivro;
 import dao.DaoUnidade;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 import javax.swing.JOptionPane;
 import model.Livro;
 import model.Unidade;
@@ -55,32 +55,52 @@ public class ControllerManutencaoUnidade {
         this.unidade = unidade;
     }
     
+    private Unidade getUnidadeFromScreen() throws ParseException{
+        Long idLivro = Long.parseLong(this.getView().getjTLivro().getText());
+        String compra = this.getView().getjTCompra().getText();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Livro livro = getLivro(idLivro);
+        
+        Calendar dataAdmissao = Calendar.getInstance();
+        Date date = dateFormat.parse(compra);
+        dataAdmissao.setTime(date);
+        
+        Unidade unidade = new Unidade(getDisponibilidade(), dataAdmissao, livro);
+        return unidade;
+    }
+    
     public boolean gravarUnidade(){
         try {
-            //int id = Integer.parseInt(this.getView().getjTId().getText());
-            Long idLivro = Long.parseLong(this.getView().getjTLivro().getText());
-            String compra = this.getView().getjTCompra().getText();
-            Livro livro = getLivro(idLivro);
-            
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            
-            Calendar dataAdmissao = Calendar.getInstance();
-            Date date = dateFormat.parse(compra);
-            dataAdmissao.setTime(date);
-            
-            if(livro != null){
-                Unidade unidade = new Unidade(getDisponibilidade(), dataAdmissao, livro);
-                this.getDaoUnidade().insert(unidade);
+            if(this.getUnidadeFromScreen().getLivro() != null){
+                this.getDaoUnidade().insert(this.getUnidadeFromScreen());
                 JOptionPane.showMessageDialog(this.getView(), "Unidade gravada com sucesso!");
                 this.getView().getjBLimpar().doClick();
+                return true;
             } else {
                 JOptionPane.showMessageDialog(this.getView(), "O livro informado não existe.");
                 return false;
             }
-            return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.getView(), e.getMessage());
             return false;
+        }
+    }
+    
+    public void alterarUnidade() {
+        try {
+            if(this.getUnidadeFromScreen().getLivro() != null){
+                this.getUnidade().setLivro(this.getUnidadeFromScreen().getLivro());
+                this.getUnidade().setDataCompra(this.getUnidadeFromScreen().getDataCompra());
+                this.getUnidade().setDisponibilidade(this.getUnidadeFromScreen().getDisponibilidade());
+                this.daoUnidade.update(this.getUnidade());
+                this.view.getjBLimpar().doClick();
+                JOptionPane.showMessageDialog(view, "Unidade alterada com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this.getView(), "O livro informado não existe.");
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, e.getMessage());
         }
     }
     
@@ -102,5 +122,13 @@ public class ControllerManutencaoUnidade {
                 return 'N';
         }
         return 0;
-    }    
+    }
+
+    public void excluirUnidade() {
+        try {
+            this.getDaoUnidade().delete(this.getDaoUnidade().list(this.getUnidade().getId()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(view, "Não foi possível excluir a unidade. Erro: "+e.getMessage());
+        }
+    }
 }

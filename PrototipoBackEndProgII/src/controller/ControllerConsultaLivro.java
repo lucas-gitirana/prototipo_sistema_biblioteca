@@ -92,17 +92,13 @@ public class ControllerConsultaLivro extends Controller {
     }
     
     public Livro getLivroSelecionado(){
-        int linha = this.getView().getjTableLivros().getSelectedRow();
-        
-        Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
-        String edicao = this.getTableFromScreen().getValueAt(linha, 1).toString();
-        String nomeAutor = this.getTableFromScreen().getValueAt(linha, 2).toString();
-        String nomeEditora = this.getTableFromScreen().getValueAt(linha, 3).toString();
-        int numPaginas = Integer.parseInt(this.getTableFromScreen().getValueAt(linha, 4).toString());
-        String titulo = this.getTableFromScreen().getValueAt(linha, 5).toString();
-        
-        Livro livro = new Livro(titulo, nomeAutor, nomeEditora, numPaginas, edicao);
-        livro.setId(id);
-        return livro;
+        try {
+            int linha = this.getView().getjTableLivros().getSelectedRow();        
+            Long id = Long.parseLong(this.getTableFromScreen().getValueAt(linha, 0).toString());
+            return this.getDaoLivro().list(id);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(this.getView(), "Não foi possível carregar o livro. Erro: "+e.getMessage());
+            return null;
+        }
     }
 }

@@ -84,8 +84,8 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMembros = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBAlterar = new javax.swing.JButton();
+        jExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -128,14 +128,19 @@ public class JFConsultaCliente extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Alterar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBAlterar.setText("Alterar");
+        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBAlterarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Excluir");
+        jExcluir.setText("Excluir");
+        jExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Cliente");
@@ -172,9 +177,9 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jBAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(jExcluir))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -203,8 +208,8 @@ public class JFConsultaCliente extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
+                    .addComponent(jExcluir)
+                    .addComponent(jBAlterar)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -212,10 +217,11 @@ public class JFConsultaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JFAlterarCliente alterarCliente = new JFAlterarCliente();
-        alterarCliente.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        JFCadastroCliente manCliente = new JFCadastroCliente();
+        manCliente.getController().setMembro(this.getController().getMembroSelecionado());
+        manCliente.setVisible(true);
+    }//GEN-LAST:event_jBAlterarActionPerformed
 
     private void jTPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPesquisaActionPerformed
         // TODO add your handling code here:
@@ -237,6 +243,13 @@ public class JFConsultaCliente extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.getController().pesquisar();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jExcluirActionPerformed
+        JFCadastroCliente cadastroCliente = new JFCadastroCliente();
+        cadastroCliente.getController().setMembro(this.getController().getMembroSelecionado());
+        cadastroCliente.getController().excluirMembro();
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -281,15 +294,15 @@ public class JFConsultaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlterar;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jCBFiltro;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
     private javax.swing.JEditorPane jEditorPane1;
+    private javax.swing.JButton jExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;

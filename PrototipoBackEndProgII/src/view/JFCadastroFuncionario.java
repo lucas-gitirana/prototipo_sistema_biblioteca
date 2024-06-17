@@ -7,6 +7,7 @@ package view;
 import controller.ControllerConsultaLivro;
 import controller.ControllerManutencaoFuncionario;
 import dao.DaoLivro;
+import java.text.SimpleDateFormat;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -117,7 +118,7 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLTituloPagina = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -136,9 +137,14 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
         jTNascimento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Cadastrar Funcionário");
+        jLTituloPagina.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLTituloPagina.setText("Cadastrar Funcionário");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Id");
@@ -203,7 +209,7 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
+                    .addComponent(jLTituloPagina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,7 +240,7 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLTituloPagina)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -286,7 +292,11 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
         if(!validaCampos.isBlank()){
             JOptionPane.showMessageDialog(rootPane, validaCampos);
         } else {
-            this.getController().gravarFuncionario();
+            if(this.getController().getFuncionario()!= null){
+                this.getController().alterarFuncionario();
+            } else {
+                this.getController().gravarFuncionario();
+            }
         }
     }//GEN-LAST:event_jBGravarActionPerformed
 
@@ -298,6 +308,21 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
        jTNome.setText("");
        jTSalario.setText("");
     }//GEN-LAST:event_jBLimparActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        if(this.getController().getFuncionario() != null){
+            jTId.setText(String.valueOf(this.getController().getFuncionario().getId()));
+            jTCargo.setText(this.getController().getFuncionario().getCargo());
+            jTCpf.setText(this.getController().getFuncionario().getCpf());
+            jTNome.setText(this.getController().getFuncionario().getNome());
+            jTSalario.setText(String.valueOf(this.getController().getFuncionario().getSalario()));
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            jTAdmissao.setText(sdf.format(this.getController().getFuncionario().getDataAdmissao().getTime()));
+            jTNascimento.setText(sdf.format(this.getController().getFuncionario().getDataNascimento().getTime()));
+            jLTituloPagina.setText("Alterar Funcionário");
+        }
+    }//GEN-LAST:event_formWindowOpened
 
     private String validaCampos(){
         String msg = "";
@@ -363,7 +388,7 @@ public class JFCadastroFuncionario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBGravar;
     private javax.swing.JButton jBLimpar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLTituloPagina;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

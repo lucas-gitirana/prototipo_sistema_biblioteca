@@ -76,8 +76,8 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFuncionarios = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBAlterar = new javax.swing.JButton();
+        jBExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTPesquisa = new javax.swing.JTextField();
         jBPesquisar = new javax.swing.JButton();
@@ -130,14 +130,19 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Alterar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBAlterar.setText("Alterar");
+        jBAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBAlterarActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Excluir");
+        jBExcluir.setText("Excluir");
+        jBExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBExcluirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Funcionário");
@@ -174,9 +179,9 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(jBAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3))
+                        .addComponent(jBExcluir))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,8 +208,8 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
+                    .addComponent(jBExcluir)
+                    .addComponent(jBAlterar)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -212,10 +217,11 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JFAlterarFuncionario alterarFuncionario = new JFAlterarFuncionario();
-        alterarFuncionario.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void jBAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAlterarActionPerformed
+        JFCadastroFuncionario manFuncionario = new JFCadastroFuncionario();
+        manFuncionario.getController().setFuncionario(this.getController().getFuncionarioSelecionado());
+        manFuncionario.setVisible(true);
+    }//GEN-LAST:event_jBAlterarActionPerformed
 
     private void jTPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPesquisaActionPerformed
         // TODO add your handling code here:
@@ -237,6 +243,13 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
     private void jBPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBPesquisarActionPerformed
         this.getController().pesquisar();
     }//GEN-LAST:event_jBPesquisarActionPerformed
+
+    private void jBExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBExcluirActionPerformed
+        JFCadastroFuncionario cadastroFuncionario = new JFCadastroFuncionario();
+        cadastroFuncionario.getController().setFuncionario(this.getController().getFuncionarioSelecionado());
+        cadastroFuncionario.getController().excluirFuncionario();
+        this.getController().pesquisar();
+    }//GEN-LAST:event_jBExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,10 +290,10 @@ public class JFConsultaFuncionario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAlterar;
+    private javax.swing.JButton jBExcluir;
     private javax.swing.JButton jBPesquisar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jCBFiltro;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
