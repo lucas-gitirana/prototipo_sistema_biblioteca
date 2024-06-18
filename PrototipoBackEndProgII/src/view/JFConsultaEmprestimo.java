@@ -7,6 +7,7 @@ package view;
 import controller.ControllerConsultaEmprestimo;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
@@ -34,14 +35,16 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
                     // Habilita o botão porque há uma linha selecionada
                     jbAlterar.setEnabled(true);
                     jbExcluir.setEnabled(true);
-                    jbConcluir.setEnabled(true);
+                    jbDevolver.setEnabled(true);
                     jbUnidades.setEnabled(true);
+                    jbDesatualizar.setEnabled(true);
                 } else {
                     // Desabilita o botão porque nenhuma linha está selecionada
                     jbAlterar.setEnabled(false);
                     jbExcluir.setEnabled(false);
-                    jbConcluir.setEnabled(false);
+                    jbDevolver.setEnabled(false);
                     jbUnidades.setEnabled(false);
+                    jbDesatualizar.setEnabled(false);
                 }
             }
         });
@@ -113,8 +116,9 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         jbAlterar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jbConcluir = new javax.swing.JButton();
+        jbDevolver = new javax.swing.JButton();
         jbUnidades = new javax.swing.JButton();
+        jbDesatualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -188,11 +192,12 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Empréstimos");
 
-        jbConcluir.setText("Concluir");
-        jbConcluir.setEnabled(false);
-        jbConcluir.addActionListener(new java.awt.event.ActionListener() {
+        jbDevolver.setText("Devolver");
+        jbDevolver.setToolTipText("");
+        jbDevolver.setEnabled(false);
+        jbDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbConcluirActionPerformed(evt);
+                jbDevolverActionPerformed(evt);
             }
         });
 
@@ -201,6 +206,15 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         jbUnidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbUnidadesActionPerformed(evt);
+            }
+        });
+
+        jbDesatualizar.setText("Desatualizar");
+        jbDesatualizar.setToolTipText("");
+        jbDesatualizar.setEnabled(false);
+        jbDesatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDesatualizarActionPerformed(evt);
             }
         });
 
@@ -219,8 +233,10 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jbUnidades)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbConcluir)
-                        .addGap(55, 55, 55)
+                        .addComponent(jbDevolver)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbDesatualizar)
+                        .addGap(39, 39, 39)
                         .addComponent(jbIncluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbAlterar)
@@ -251,8 +267,9 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
                     .addComponent(jbExcluir)
                     .addComponent(jbAlterar)
                     .addComponent(jbIncluir)
-                    .addComponent(jbConcluir)
-                    .addComponent(jbUnidades))
+                    .addComponent(jbDevolver)
+                    .addComponent(jbUnidades)
+                    .addComponent(jbDesatualizar))
                 .addGap(12, 12, 12))
         );
 
@@ -282,14 +299,20 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         manEmprestimo.setVisible(true);
     }//GEN-LAST:event_jbAlterarActionPerformed
 
-    private void jbConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbConcluirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbConcluirActionPerformed
+    private void jbDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDevolverActionPerformed
+        if(this.getController().getEmprestimoSelecionado().getUnidades().size() >= 1){
+            JFManutencaoDevolverEmprestimo view = new JFManutencaoDevolverEmprestimo();
+            view.getController().setEmprestimo(this.getController().getEmprestimoSelecionado());
+            view.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Este empréstimo não tem unidades.");
+        }        
+    }//GEN-LAST:event_jbDevolverActionPerformed
 
     private void jbUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUnidadesActionPerformed
         JFConsultaUnidadeEmprestimo unidadeEmprestimo = new JFConsultaUnidadeEmprestimo();
         unidadeEmprestimo.getController().setEmprestimo(this.getController().getEmprestimoSelecionado());
-        unidadeEmprestimo.setVisible(true);
+        unidadeEmprestimo.setVisible(true);     
     }//GEN-LAST:event_jbUnidadesActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -302,6 +325,16 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
         manEmprestimo.getController().excluirEmprestimo();
         this.getController().pesquisar();
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbDesatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDesatualizarActionPerformed
+        if(this.getController().getEmprestimoSelecionado().getDataDevolucaoReal() == null){
+            JOptionPane.showMessageDialog(rootPane, "Este empréstimo ainda não foi devolvido.");
+        } else {
+            JFManutencaoDevolverEmprestimo view = new JFManutencaoDevolverEmprestimo();
+            view.getController().desatualizarEmprestimo(this.getController().getEmprestimoSelecionado());
+            this.getController().pesquisar();
+        }
+    }//GEN-LAST:event_jbDesatualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,7 +377,8 @@ public class JFConsultaEmprestimo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEmprestimos;
     private javax.swing.JButton jbAlterar;
-    private javax.swing.JButton jbConcluir;
+    private javax.swing.JButton jbDesatualizar;
+    private javax.swing.JButton jbDevolver;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbIncluir;
     private javax.swing.JButton jbUnidades;

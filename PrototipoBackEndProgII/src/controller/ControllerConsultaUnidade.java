@@ -75,6 +75,7 @@ public class ControllerConsultaUnidade {
         for(Unidade u : livros){
             this.getTableFromScreen().addRow(new String[]{String.valueOf(u.getId()),
                                                  String.valueOf(u.getLivro().getId()),
+                                                 u.getLivro().getTitulo(),
                                                  String.valueOf(u.getDisponibilidade()),
                                                  sdf.format(u.getDataCompra().getTime())});
         }
@@ -89,6 +90,8 @@ public class ControllerConsultaUnidade {
                 return this.getDaoUnidade().listById(Long.parseLong(valor));
             case "Código - Livro":
                 return this.getDaoUnidade().listByIdLivro(Long.parseLong(valor));
+            case "Título - Livro":
+                return this.getDaoUnidade().listByTituloLivro(valor);
             case "Disponibilidade":
                 return this.getDaoUnidade().listByDisponibilidade(valor.toUpperCase().charAt(0));
             case "Data de Compra":

@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -24,6 +26,19 @@ public class JFConsultaUnidadeEmprestimo extends javax.swing.JFrame {
     public JFConsultaUnidadeEmprestimo() {
         this.controller = new ControllerConsultaUnidadeEmprestimo(this);
         initComponents();
+        
+        jTableUnidadesEmprestimo.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                // Verifica se há alguma linha selecionada
+                if (!e.getValueIsAdjusting() && jTableUnidadesEmprestimo.getSelectedRow() != -1) {
+                    // Habilita o botão porque há uma linha selecionada                    
+                    jbExcluir.setEnabled(true);
+                } else {
+                    // Desabilita o botão porque nenhuma linha está selecionada
+                    jbExcluir.setEnabled(false);
+                }
+            }
+        });
     }
 
     public ControllerConsultaUnidadeEmprestimo getController() {
@@ -94,7 +109,7 @@ public class JFConsultaUnidadeEmprestimo extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Consultar Unidades do Empréstimo");
 
-        jCBFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Unidade - Código", "Unidade - Livro", " ", " " }));
+        jCBFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código - Unidade", "Código - Livro", "Título - Livro", " ", " " }));
         jCBFiltros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBFiltrosActionPerformed(evt);
@@ -120,11 +135,11 @@ public class JFConsultaUnidadeEmprestimo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Unidade - Código", "Unidade - Livro"
+                "Código - Unidade", "Código - Livro", "Título - Livro"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -211,10 +226,10 @@ public class JFConsultaUnidadeEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_jbIncluirActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        //JFManutencaoUnidade manUnidade = new JFManutencaoUnidade();
-        //manUnidade.getController().setUnidade(this.getController().getUnidadeSelecionada());
-        //manUnidade.getController().excluirUnidade();
-        //this.getController().pesquisar();
+        JFManutencaoUnidadeEmprestimo manView = new JFManutencaoUnidadeEmprestimo();        
+        manView.getController().setEmprestimo(this.getController().getEmprestimo());
+        manView.getController().removerUnidade(this.getController().getUnidadeSelecionada());
+        this.getController().pesquisar();
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

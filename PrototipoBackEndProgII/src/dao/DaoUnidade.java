@@ -116,4 +116,15 @@ public class DaoUnidade extends Dao<Unidade>{
             throw new RuntimeException("Não foi possível carregar as unidades com data de compra igual a " +dataCompra+ ". \nErro: " + e.getMessage());
         }
     }
+
+    public List<Unidade> listByTituloLivro(String titulo) {
+        try {
+            Query query = this.getEntityManager().createQuery("SELECT u from Unidade u where u.livro.titulo = :titulo");
+            query.setParameter("titulo", titulo);
+            return query.getResultList();
+        } catch (Exception e) {
+            this.getEntityManager().close();
+            throw new RuntimeException("Não foi possível carregar as unidades com o título de livro informado. \nErro: " + e.getMessage());
+        }
+    }
 }

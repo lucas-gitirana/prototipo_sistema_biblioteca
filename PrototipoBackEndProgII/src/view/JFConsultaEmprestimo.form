@@ -38,8 +38,10 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="jbUnidades" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jbConcluir" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                      <Component id="jbDevolver" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jbDesatualizar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="jbIncluir" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jbAlterar" min="-2" max="-2" attributes="0"/>
@@ -76,8 +78,9 @@
                   <Component id="jbExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbAlterar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbIncluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jbConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbDevolver" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jbUnidades" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbDesatualizar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
@@ -182,13 +185,14 @@
         <Property name="text" type="java.lang.String" value="Consultar Empr&#xe9;stimos"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jbConcluir">
+    <Component class="javax.swing.JButton" name="jbDevolver">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Concluir"/>
+        <Property name="text" type="java.lang.String" value="Devolver"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbConcluirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbDevolverActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbUnidades">
@@ -198,6 +202,16 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbUnidadesActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jbDesatualizar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Desatualizar"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbDesatualizarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

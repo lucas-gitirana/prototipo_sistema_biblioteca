@@ -73,12 +73,19 @@ public class ControllerConsultaEmprestimo {
     public void imprimeValores(List<Emprestimo> emprestimos){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for(Emprestimo e : emprestimos){
+            
+            String dataEmprestimo = "";
+            if(e.getDataDevolucaoReal() != null){
+                dataEmprestimo = sdf.format(e.getDataDevolucaoReal().getTime());
+            }
+            
             this.getTableFromScreen().addRow(new String[]{String.valueOf(e.getId()),
                                                  sdf.format(e.getDataEmprestimo().getTime()),
                                                  sdf.format(e.getDataDataDevolucaoEsperada().getTime()),
                                                  String.valueOf(e.getValorEmprestimo()),
                                                  String.valueOf(e.getMembro().getId()),
-                                                 String.valueOf(e.getFuncionario().getId())
+                                                 String.valueOf(e.getFuncionario().getId()),
+                                                 dataEmprestimo,
                                                  });
         }
     }
